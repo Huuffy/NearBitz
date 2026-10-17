@@ -1,0 +1,50 @@
+{
+  "name": "sales-locator-backend",
+  "version": "1.0.0",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "nodemon server.js",
+    "migrate": "node scripts/run-migrations.js",
+    "seed:db": "node scripts/seed-db.js",
+    "seed:hsn": "node scripts/seed-hsn.js",
+    "seed:hsn:replace": "node scripts/seed-hsn.js --replace",
+    "seed": "npm run seed:db && npm run seed:hsn",
+    "fetch:mca": "node scripts/fetch-mca-api.js --api-key=$DATAGOV_API_KEY",
+    "fetch:mca:inspect": "node scripts/fetch-mca-api.js --api-key=$DATAGOV_API_KEY --inspect",
+    "fetch:mca:state": "node scripts/fetch-mca-api.js --api-key=$DATAGOV_API_KEY --state=maharashtra",
+    "import:mca": "node scripts/import-mca.js --file=./data/mca-company-master.csv --limit=20000",
+    "import:mca:all": "node scripts/import-mca.js --file=./data/mca-company-master.csv",
+    "import:mca:dry": "node scripts/import-mca.js --file=./data/mca-company-master.csv --dry-run",
+    "import:mca:state": "node scripts/import-mca.js --state=maharashtra --limit=5000",
+    "classify": "node scripts/classify-mca-companies.js",
+    "classify:dry": "node scripts/classify-mca-companies.js --dry-run",
+    "geocode": "node scripts/geocode-photon.js",
+    "geocode:retry": "node scripts/geocode-photon.js --retry",
+    "pipeline": "npm run migrate && npm run seed && npm run import:mca && npm run classify && npm run geocode"
+  },
+  "dependencies": {
+    "bcryptjs": "^3.0.3",
+    "compression": "^1.8.2",
+    "cookie-parser": "^1.4.7",
+    "cors": "^2.8.5",
+    "csv-parse": "^7.0.3",
+    "dotenv": "^16.0.3",
+    "express": "^4.18.2",
+    "express-rate-limit": "^8.7.1",
+    "fuse.js": "^7.5.0",
+    "helmet": "^8.3.0",
+    "hsn-code-package": "^3.0.0",
+    "jsonwebtoken": "^9.0.3",
+    "multer": "^2.4.0",
+    "node-cron": "^4.6.0",
+    "node-fetch": "^2.6.11",
+    "p-limit": "^7.3.3",
+    "pg": "^8.8.0",
+    "uuid": "^14.0.2",
+    "xlsx": "^0.18.5"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.20"
+  }
+}

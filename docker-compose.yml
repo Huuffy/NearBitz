@@ -1,0 +1,63 @@
+services:
+
+  # ── PostgreSQL + PostGIS ──────────────────────────────────────────────────────
+  postgres:
+    image: postgis/postgis:16-3.4-alpine
+    container_name: geosales_db
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER:     postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB:       sales_app
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d sales_app"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+      start_period: 10s
+
+  # ── Express API ───────────────────────────────────────────────────────────────
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+      target: production
+    container_name: geosales_api
+    restart: unless-stopped
+    depends_on:
+      postgres:
+        condition: service_healthy
+    env_file: ./backend/.env
+    environment:
+      DB_HOST: postgres        # override localhost → container service name
+      DB_PORT: 5432
+      NODE_ENV: production
+      PHOTON_URL: http://host.docker.internal:2322   # Photon runs on the host, not in this container
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    ports:
+      - "3000:3000"
+    volumes:
+      - uploads:/app/uploads   # named volume — persistent, cloud-transferable
+    healthcheck:
+      test: ["CMD-SHELL", "wget -qO- http://localhost:3000/health || exit 1"]
+      interval: 15s
+      timeout: 5s
+      retries: 3
+      start_period: 20s
+
+# ── Volumes ───────────────────────────────────────────────────────────────────
+volumes:
+  pgdata:
+    driver: local
+  uploads:
+    driver: local
+
+# ── Networks (isolated, default bridge) ──────────────────────────────────────
+networks:
+  default:
+    name: geosales_network

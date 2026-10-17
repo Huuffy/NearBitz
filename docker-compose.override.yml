@@ -1,0 +1,20 @@
+# Dev override — auto-merged by `docker compose up`
+# Source code is mounted live — nodemon reloads on every file save, no rebuild needed.
+# Production deploy: docker compose -f docker-compose.yml up
+
+services:
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+      target: dev
+    environment:
+      NODE_ENV: development
+    command: npm run dev
+    volumes:
+      - ./backend:/app                   # live source sync
+      - backend_node_modules:/app/node_modules   # named volume keeps installed packages
+      - ./backend/data:/app/data         # MCA CSV + data files
+
+volumes:
+  backend_node_modules:

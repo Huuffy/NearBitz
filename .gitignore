@@ -1,0 +1,36 @@
+# ── Secrets ──────────────────────────────────────────────
+.env
+.env.*
+!.env.example
+
+# ── Dependencies & build output ──────────────────────────
+node_modules/
+mobile/.expo/
+mobile/dist/
+mobile/web-build/
+*.tsbuildinfo
+
+# ── Local-only: client spreadsheets, backups ─────────────
+local/
+
+# ── Runtime state & logs ─────────────────────────────────
+.run/
+*.log
+
+# ── Geocoder binaries + India map data (~1 GB, see geocoder/README.md) ──
+geocoder/*
+!geocoder/README.md
+
+# ── Data downloads (re-fetch with `npm run fetch:mca`) ───
+backend/data/*
+!backend/data/.gitkeep
+
+# ── User uploads ─────────────────────────────────────────
+backend/uploads/*
+!backend/uploads/.gitkeep
+
+# ── OS / editor ──────────────────────────────────────────
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/

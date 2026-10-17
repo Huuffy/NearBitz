@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 72" width="320" height="72">
+  <!-- Map pin icon -->
+  <g transform="translate(8, 4)">
+    <!-- Teardrop body -->
+    <path d="M32 4 C18 4 8 14 8 28 C8 44 32 64 32 64 C32 64 56 44 56 28 C56 14 46 4 32 4 Z"
+          fill="#4285f4"/>
+    <!-- Inner white circle -->
+    <circle cx="32" cy="27" r="11" fill="#ffffff"/>
+    <!-- Inner dot -->
+    <circle cx="32" cy="27" r="5" fill="#4285f4"/>
+  </g>
+
+  <!-- "GeoSales" text -->
+  <text x="80" y="50"
+        font-family="Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif"
+        font-size="36"
+        font-weight="700"
+        fill="#1a2744"
+        letter-spacing="-0.5">GeoSales</text>
+
+  <!-- ".ai" text in blue -->
+  <text x="254" y="50"
+        font-family="Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif"
+        font-size="36"
+        font-weight="700"
+        fill="#4285f4"
+        letter-spacing="-0.5">.ai</text>
+</svg>
